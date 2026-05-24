@@ -16,3 +16,11 @@ class TestHTMLNode(unittest.TestCase):
                         [HTMLNode("p", "Child paragraph")], 
                         {"prop1": "value1", "prop2:": "value2"})
         self.assertEqual(repr(node),"HTMLNode(p, My paragraph text, [HTMLNode(p, Child paragraph, None, None)], {'prop1': 'value1', 'prop2:': 'value2'})")
+
+    def test_props_to_html(self):
+        node = HTMLNode("p", "My paragraph text", 
+                        [HTMLNode("p", "Child paragraph")], 
+                        {"prop1": "value1", "prop2:": "value2"})
+        
+        html = node.props_to_html()
+        self.assertEqual(html, " prop1=value1 prop2=value2")
