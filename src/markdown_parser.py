@@ -13,6 +13,8 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             new_nodes.append(TextNode(split_text[2], TextType.PLAIN))
         elif len(split_text) == 2:
             raise ValueError('missing')
+        else:
+            raise RuntimeError('Unexpected error')
 
     return new_nodes
 
