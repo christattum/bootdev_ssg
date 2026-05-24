@@ -1,5 +1,9 @@
 # SSG
 
+### Resources
+
+[Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+
 ### Instructions
 
 At the terminal:-
