@@ -16,3 +16,20 @@ class TestParentNode(unittest.TestCase):
 
         result = node.to_html()
         self.assertEqual(result, '<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>')
+
+    def test_to_html_with_props_and_children(self):
+        node = ParentNode(
+            "p",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+            {
+                'prop1': 'value1'
+            }
+        )
+
+        result = node.to_html()
+        self.assertEqual(result, '<p prop1="value1"><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>')
