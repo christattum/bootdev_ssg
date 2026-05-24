@@ -6,7 +6,19 @@ class HTMLNode:
         self.props = props
 
     def props_to_html(self):
-        pass
+        if self.props is None:
+            return ""
+        
+        if len(self.props) == 0:
+            return ""
+
+        values = []
+        for (k,v) in self.props.items():
+            values.append(f"{k}={v}")
+
+        result = " ".join(values)
+        return " " + result
+
 
     def to_html(self):
         raise NotImplementedError('Override and implement please!')
