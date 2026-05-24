@@ -1,0 +1,18 @@
+class HTMLNode:
+    def __init__(self, tag = None, value = None, children = None, props = None):
+        self.tag = tag
+        self.value = value
+        self.children = children
+        self.props = props
+
+    def props_to_html(self):
+        pass
+
+    def to_html(self):
+        raise NotImplementedError('Override and implement please!')
+    
+    def __eq__(self, other):
+        return self.tag == other.tag and self.value == other.value
+    
+    def __repr__(self):
+        return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
