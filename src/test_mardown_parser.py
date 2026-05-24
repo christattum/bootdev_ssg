@@ -37,5 +37,13 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         with self.assertRaises(ValueError):
             split_nodes_delimiter([node], "`", TextType.CODE)
 
-    def test_non_text_node_will_pass_through_as_new_node(self):
-        pass
+    def test_italic_text_node_will_pass_through_as_new_node(self):
+        node1 = TextNode("This is text with an _italic_ word", TextType.PLAIN)
+        node2 = TextNode("This is bold text", TextType.BOLD)
+        new_nodes = split_nodes_delimiter([node1, node2], "_", TextType.ITALIC)
+
+        self.assertEqual(len(new_nodes), 4)
+        self.assertEqual(new_nodes[0], TextNode("This is text with an ", TextType.PLAIN))
+        self.assertEqual(new_nodes[1], TextNode("italic", TextType.ITALIC))
+        self.assertEqual(new_nodes[2], TextNode(" word", TextType.PLAIN))
+        self.assertEqual(new_nodes[3], TextNode("This is bold text", TextType.BOLD))
