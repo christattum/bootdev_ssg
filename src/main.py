@@ -2,8 +2,9 @@ from textnode import TextNode, TextType
 
 def main():
     node = TextNode("This is some anchor text", 
-                    TextType.TEXT_LINK, 
+                    TextType.LINK, 
                     "https://christattum.com")
     print(node)
 
-main()
+if __name__ == "__main__":
+    main()
