@@ -14,7 +14,7 @@ class HTMLNode:
 
         values = []
         for (k,v) in self.props.items():
-            values.append(f"{k}={v}")
+            values.append(f'{k}="{v}"')
 
         result = " ".join(values)
         return " " + result
