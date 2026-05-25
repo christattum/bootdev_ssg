@@ -79,6 +79,9 @@ def split_nodes_link(old_nodes):
             text = split_text[1]
 
         return new_nodes
+    
+def text_to_textnodes(text):
+    return []
 
 def extract_markdown_images(text):
     matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
