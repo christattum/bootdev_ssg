@@ -11,7 +11,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         # maxsplit = 2, for opening and closing delimiter
         # which results in 3 strings
         split_text = old_node.text.split(delimiter, maxsplit=2)
-        print(split_text)
         if len(split_text) == 3:
             new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
             new_nodes.append(TextNode(split_text[1], text_type))
@@ -27,5 +26,9 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
 def extract_markdown_images(text):
     matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
+    return matches
+
+def extract_markdown_links(text):
+    matches = re.findall(r"\[(.+?)\]\((.+?)\)", text)
     return matches
 

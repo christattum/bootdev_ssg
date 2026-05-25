@@ -19,7 +19,6 @@ class HTMLNode:
         result = " ".join(values)
         return " " + result
 
-
     def to_html(self):
         raise NotImplementedError('Override and implement please!')
     
