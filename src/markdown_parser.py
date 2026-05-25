@@ -1,4 +1,5 @@
 from textnode import TextNode, TextType
+from blocktype import BlockType
 import re
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -120,7 +121,13 @@ def text_to_textnodes(text):
     return nodes
 
 def block_to_block_type(block):
-    pass
+    if len(block) <= 2:
+        return BlockType.PARAGRAPH
+
+    if block[0] == '#' and block[1] == ' ':
+        return BlockType.HEADING
+    
+    return BlockType.PARAGRAPH
 
 def extract_markdown_images(text):
     matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
