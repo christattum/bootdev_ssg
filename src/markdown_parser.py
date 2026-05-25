@@ -24,6 +24,12 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
     return new_nodes
 
+def split_nodes_image(old_nodes):
+    return []
+
+def split_nodes_link(old_nodes):
+    return []
+
 def extract_markdown_images(text):
     matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
     return matches
