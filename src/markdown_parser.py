@@ -99,13 +99,13 @@ def text_to_textnodes(text):
     print("start", nodes)
 
     nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
-    print("italic", nodes)
+    #print("italic", nodes)
 
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-    print("bold", nodes)
+    ##print("bold", nodes)
 
     nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
-    print("code", nodes)
+    #print("code", nodes)
 
     nodes = split_nodes_image(nodes)
     print("images", nodes)
