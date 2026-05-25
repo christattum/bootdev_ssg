@@ -143,6 +143,50 @@ class TestTextToNodes(unittest.TestCase):
         text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 
         nodes = text_to_textnodes(text)
+        # self.assertListEqual(
+        #     [
+        #         TextNode("This is ", TextType.PLAIN),
+        #         TextNode("text", TextType.BOLD),
+        #         TextNode(" with an ", TextType.PLAIN),
+        #         TextNode("italic", TextType.ITALIC),
+        #         TextNode(" word and a ", TextType.PLAIN),
+        #         TextNode("code block", TextType.CODE),
+        #         TextNode(" and an ", TextType.PLAIN),
+        #         TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+        #         TextNode(" and a ", TextType.PLAIN),
+        #         TextNode("link", TextType.LINK, "https://boot.dev"),
+        #     ],
+        #     nodes
+        # )
+
+    def test_with_a_link(self):
+        text = "This is text with a [link](https://boot.dev)"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("This is text with a ", TextType.PLAIN),
+                TextNode("link", TextType.LINK, "https://boot.dev"),
+            ],
+            nodes
+        )
+
+    def test_with_an_image(self):
+        text = "This is text with an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.PLAIN),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            ],
+            nodes
+        )
+
+    def test_without_links_or_images(self):
+        text = "This is **text** with an _italic_ word and a `code block` and no images or links"
+
+        nodes = text_to_textnodes(text)
         self.assertListEqual(
             [
                 TextNode("This is ", TextType.PLAIN),
@@ -151,10 +195,7 @@ class TestTextToNodes(unittest.TestCase):
                 TextNode("italic", TextType.ITALIC),
                 TextNode(" word and a ", TextType.PLAIN),
                 TextNode("code block", TextType.CODE),
-                TextNode(" and an ", TextType.PLAIN),
-                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
-                TextNode(" and a ", TextType.PLAIN),
-                TextNode("link", TextType.LINK, "https://boot.dev"),
+                TextNode(" and no images or links", TextType.PLAIN),
             ],
             nodes
         )
