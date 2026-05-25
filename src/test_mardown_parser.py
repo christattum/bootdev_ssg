@@ -159,6 +159,20 @@ class TestTextToNodes(unittest.TestCase):
         #     nodes
         # )
 
+    def test_with_a_link_and_image(self):
+        text = "This is text with a [link](https://boot.dev) and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg)"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("This is text with a ", TextType.PLAIN),
+                TextNode("link", TextType.LINK, "https://boot.dev"),
+                TextNode("and an ", TextType.PLAIN),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg")
+            ],
+            nodes
+        )
+
     def test_with_a_link(self):
         text = "This is text with a [link](https://boot.dev)"
 
