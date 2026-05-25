@@ -47,14 +47,19 @@ def split_nodes_image(old_nodes):
             # Break off first part of string before image, then image and rest of string part
             split_text = text.split(image_text)
 
-            # Add first part as TextNode
-            new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
+            # Add first part as TextNode if there is any text before the image
+            if len(split_text[0]) != 0:
+                new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
 
             # Then add the image
             new_nodes.append(TextNode(image[0], TextType.IMAGE, image[1]))
 
             # Set text to remaining part, before looping around for next image
             text = split_text[1]
+
+        # append any remaining text
+        if len(text) != 0:
+            new_nodes.append(TextNode(text, TextType.PLAIN))
 
     return new_nodes
 
@@ -79,10 +84,11 @@ def split_nodes_link(old_nodes):
             link_text = f"[{link[0]}]({link[1]})"
 
             # Break off first part of string before link, then link and rest of string part
-            split_text = text.split(link_text)
+            split_text = text.split(link_text, maxsplit=1)
 
-            # Add first part as TextNode
-            new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
+            # Add first part as TextNode if there is any text before the link
+            if len(split_text[0]) != 0:
+                new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
 
             # Then add the link
             new_nodes.append(TextNode(link[0], TextType.LINK, link[1]))
@@ -90,28 +96,21 @@ def split_nodes_link(old_nodes):
             # Set text to remaining part, before looping around for next link
             text = split_text[1]
 
+        # append any remaining text
+        if len(text) != 0:
+            new_nodes.append(TextNode(text, TextType.PLAIN))
+
     return new_nodes
     
 def text_to_textnodes(text):
     initial_node = TextNode(text, TextType.PLAIN)
 
     nodes = [initial_node]
-    print("start", nodes)
-
     nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
-    #print("italic", nodes)
-
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
-    ##print("bold", nodes)
-
     nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
-    #print("code", nodes)
-
     nodes = split_nodes_image(nodes)
-    print("images", nodes)
-
     nodes = split_nodes_link(nodes)
-    print("link", nodes)
 
     return nodes
 

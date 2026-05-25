@@ -140,7 +140,6 @@ class TestSplitLinks(unittest.TestCase):
 
 class TestTextToNodes(unittest.TestCase):
 
-    @unittest.skip("working")
     def test_given_example(self):
         text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
 
@@ -175,7 +174,6 @@ class TestTextToNodes(unittest.TestCase):
             nodes
         )
 
-    @unittest.skip("working")
     def test_with_a_link(self):
         text = "This is text with a [link](https://boot.dev)"
 
@@ -184,6 +182,18 @@ class TestTextToNodes(unittest.TestCase):
             [
                 TextNode("This is text with a ", TextType.PLAIN),
                 TextNode("link", TextType.LINK, "https://boot.dev"),
+            ],
+            nodes
+        )
+
+    def test_with_link_first_then_remaining_text(self):
+        text = "[link](https://boot.dev) and some remaining text"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("link", TextType.LINK, "https://boot.dev"),
+                TextNode(" and some remaining text", TextType.PLAIN),
             ],
             nodes
         )
@@ -201,7 +211,31 @@ class TestTextToNodes(unittest.TestCase):
             nodes
         )
 
-    @unittest.skip("working")
+    def test_with_image_first_then_remaining_text(self):
+        text = "![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and some remaining text"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and some remaining text", TextType.PLAIN),
+            ],
+            nodes
+        )
+
+    def test_with_text_image_text(self):
+        text = "This is text with an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and some remaining text"
+
+        nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.PLAIN),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and some remaining text", TextType.PLAIN),
+            ],
+            nodes
+        )
+
     def test_with_an_image(self):
         text = "This is text with an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg)"
 
@@ -214,7 +248,6 @@ class TestTextToNodes(unittest.TestCase):
             nodes
         )
 
-    @unittest.skip("working")
     def test_without_links_or_images(self):
         text = "This is **text** with an _italic_ word and a `code block` and no images or links"
 
