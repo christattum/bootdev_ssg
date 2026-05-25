@@ -2,7 +2,7 @@ import unittest
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode
 from leafnode import LeafNode
-from markdown_parser import split_nodes_delimiter
+from markdown_parser import split_nodes_delimiter, extract_markdown_images
 
 class TestSplitNodesDelimiter(unittest.TestCase):
     def test_plain_text_node(self):
@@ -47,3 +47,16 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         self.assertEqual(new_nodes[1], TextNode("italic", TextType.ITALIC))
         self.assertEqual(new_nodes[2], TextNode(" word", TextType.PLAIN))
         self.assertEqual(new_nodes[3], TextNode("This is bold text", TextType.BOLD))
+
+class TestExtractMarkdownImages(unittest.TestCase):
+    def test_single_link(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
+        result = extract_markdown_images(text)
+        print(result)
+        # [("rick roll", "https://i.imgur.com/aKaOqIh.gif")]   
+
+    def test_two_links(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+        result = extract_markdown_images(text)
+        print(result)
+        # [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
