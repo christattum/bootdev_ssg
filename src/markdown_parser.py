@@ -1,4 +1,5 @@
 from textnode import TextNode, TextType
+import re
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
@@ -7,7 +8,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if old_node.text_type != TextType.PLAIN:
             new_nodes.append(old_node)
             continue
-
         # maxsplit = 2, for opening and closing delimiter
         # which results in 3 strings
         split_text = old_node.text.split(delimiter, maxsplit=2)
@@ -26,5 +26,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     return new_nodes
 
 def extract_markdown_images(text):
-    return []
+    matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
+    return matches
 
