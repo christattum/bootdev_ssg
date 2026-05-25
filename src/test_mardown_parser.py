@@ -49,14 +49,18 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         self.assertEqual(new_nodes[3], TextNode("This is bold text", TextType.BOLD))
 
 class TestExtractMarkdownImages(unittest.TestCase):
-    def test_single_link(self):
-        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
-        result = extract_markdown_images(text)
-        print(result)
-        # [("rick roll", "https://i.imgur.com/aKaOqIh.gif")]   
 
-    def test_two_links(self):
+    def test_given_example(self):
+        text = "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        matches = extract_markdown_images(text)
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+
+    def test_single_image(self):
+        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
+        matches = extract_markdown_images(text)
+        self.assertListEqual([("rick roll", "https://i.imgur.com/aKaOqIh.gif")], matches)   
+
+    def test_two_images(self):
         text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
-        result = extract_markdown_images(text)
-        print(result)
-        # [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+        matches = extract_markdown_images(text)
+        self.assertListEqual([("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")], matches)
