@@ -120,9 +120,38 @@ def text_to_textnodes(text):
 
     return nodes
 
+def is_ul_block(block):
+    lines = block.split("\n")
+    for line in lines:
+        if len(line) >= 2:
+            if line[0] != '-' or line[1] != ' ':
+                return False
+    
+    return True
+
+def is_ol_block(block):
+    lines = block.split("\n")
+    line_no = 1
+    for line in lines:
+        if len(line) <= 2:
+            return False
+        # TODO: use regex here, line number can be any number of digits
+        if line[0] != ord(line_no) or line[1] != '.':
+            return False
+        line_no += 1
+
+    return True
+    
+
 def block_to_block_type(block):
     if len(block) <= 2:
         return BlockType.PARAGRAPH
+    
+    if block[0] == '-' and is_ul_block(block):
+        return BlockType.UNORDERED_LIST
+    
+    if block[0] == '1' and is_ul_block(block):
+        return BlockType.UNORDERED_LIST
 
     if block[0] == '#' and block[1] == ' ':
         return BlockType.HEADING
