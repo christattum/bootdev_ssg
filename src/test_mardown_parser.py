@@ -92,6 +92,19 @@ class TestSplitImages(unittest.TestCase):
             new_nodes,
         )
 
+    def test_should_pass_through_no_images(self):
+        node = TextNode(
+            "This is text with some **bold text** and some _italic text_ but no images",
+            TextType.PLAIN,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with some **bold text** and some _italic text_ but no images", TextType.PLAIN),
+            ],
+            new_nodes,
+        )
+
 class TestSplitLinks(unittest.TestCase):
 
     def test_given_example(self):
@@ -108,6 +121,19 @@ class TestSplitLinks(unittest.TestCase):
                 TextNode(
                     "second link", TextType.LINK, "https://www.apple.com"
                 ),
+            ],
+            new_nodes,
+        )
+
+    def test_should_pass_through_no_links(self):
+        node = TextNode(
+            "This is text with some **bold text** and some _italic text_ but no links",
+            TextType.PLAIN,
+        )
+        new_nodes = split_nodes_link([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with some **bold text** and some _italic text_ but no links", TextType.PLAIN),
             ],
             new_nodes,
         )
