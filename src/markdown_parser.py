@@ -119,6 +119,9 @@ def text_to_textnodes(text):
 
     return nodes
 
+def block_to_block_type(block):
+    pass
+
 def extract_markdown_images(text):
     matches = re.findall(r"!\[(.+?)\]\((.+?)\)", text)
     return matches

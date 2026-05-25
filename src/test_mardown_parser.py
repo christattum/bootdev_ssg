@@ -1,8 +1,9 @@
 import unittest
 from textnode import TextNode, TextType
+from blocktype import BlockType
 from htmlnode import HTMLNode
 from leafnode import LeafNode
-from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks
+from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks, block_to_block_type
 
 class TestSplitNodesDelimiter(unittest.TestCase):
     def test_plain_text_node(self):
@@ -313,3 +314,51 @@ This is the same paragraph on a new line
                 "- This is a list\n- with items",
             ],
         )
+
+
+class TestBlockTypes(unittest.TestCase):
+    
+    def test_paragraph_block(self):
+        block = "Here is some paragraph text"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.PARAGRAPH)
+
+    def test_valid_heading_1_block(self):
+        block = "# This is a heading 1"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.HEADING)
+
+    def test_valid_code_block(self):
+        block = """
+```
+This is first line
+This is second line
+```
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.CODE)
+
+    def test_valid_quote_block(self):
+        block = """
+> This is quote line 1
+> This is quote line 2
+> This is quote line 2
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.QUOTE)
+
+    def test_valid_unordered_list_block(self):
+        block = """
+- This is first item
+- This is second item
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.UNORDERED_LIST)
+
+    def test_valid_ordered_list_block(self):
+        block = """
+1. This is first item
+2. This is second item
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.ORDERED_LIST)
