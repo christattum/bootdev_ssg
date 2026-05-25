@@ -141,20 +141,43 @@ def is_ol_block(block):
         line_no += 1
 
     return True
+
+def is_quote_block(block):
+    lines = block.split("\n")
+    for line in lines:
+        if len(line) <= 1:
+            return False
+        if line[0] != '<':
+            return False
     
+    return True
+
+def is_code_block(block):
+    lines = block.split("\n")
+    if len(lines) > 1 and lines[:len(lines)] == "```":
+        return True
+    
+    return False
 
 def block_to_block_type(block):
     if len(block) <= 2:
         return BlockType.PARAGRAPH
-    
+        
     if block[0] == '-' and is_ul_block(block):
         return BlockType.UNORDERED_LIST
     
-    if block[0] == '1' and is_ul_block(block):
-        return BlockType.UNORDERED_LIST
+    if block[0] == '1' and is_ol_block(block):
+        return BlockType.ORDERED_LIST
+    
+    if block[0] == '<' and is_quote_block(block):
+        return BlockType.QUOTE
 
     if block[0] == '#' and block[1] == ' ':
         return BlockType.HEADING
+    
+    if re.match(r"^```\r?\n", block):
+        print("YAY!")
+        return BlockType.CODE
     
     return BlockType.PARAGRAPH
 

@@ -377,7 +377,6 @@ This is quote line 2
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.PARAGRAPH)
 
-
     def test_valid_ordered_list_block(self):
         block = """
 1. This is first item
@@ -385,7 +384,6 @@ This is quote line 2
 """
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.ORDERED_LIST)
-
 
     def test_ordered_list_without_spaces_is_paragraph(self):
         block = """
@@ -402,7 +400,6 @@ This is quote line 2
 """
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.PARAGRAPH)
-
 
     def test_ordered_list_with_out_of_order_numbers_is_paragraph(self):
         block = """
