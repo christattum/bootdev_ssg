@@ -101,6 +101,11 @@ def split_nodes_link(old_nodes):
             new_nodes.append(TextNode(text, TextType.PLAIN))
 
     return new_nodes
+
+def markdown_to_blocks(markdown: str):
+    blocks = markdown.strip().split("\n\n")
+    stripped_blocks = list(filter(lambda x: len(x) != 0, map(lambda x: x.strip(), blocks)))
+    return stripped_blocks
     
 def text_to_textnodes(text):
     initial_node = TextNode(text, TextType.PLAIN)
