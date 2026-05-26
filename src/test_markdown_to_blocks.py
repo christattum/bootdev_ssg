@@ -3,6 +3,26 @@ from markdown_parser import markdown_to_blocks
 
 class TestMarkdownToBlocks(unittest.TestCase):
 
+    def test_lines_between_paragraphs_are_stripped(self):
+        md =  "para one\n\n\npara two"
+        # should produce two paragraph-ish blocks, with no empty block
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(blocks, 
+            [
+                "para one",
+                "para two"
+            ])
+
+
+    def test_lines_inside_code_blocks_are_preserved(self):
+        md = "```\nline one\n\nline three\n```"
+        # should stay one code block, including the blank line
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(blocks, [
+            "```\nline one\n\nline three\n```"
+
+        ])
+
     def test_empty_blocks_are_removed(self):
         md = """
 
