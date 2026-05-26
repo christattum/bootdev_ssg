@@ -116,13 +116,25 @@ def markdown_to_blocks(markdown: str):
 
     in_code_block = False
     for line in lines:
-        # Only add non-empty lines outside code block
-        # Unless in a code block, then include empty lines
-        if len(line) > 0 or in_code_block:
+        # If this line is a code fence, add it and toggle code state.
+        if line.startswith("```"):
+            current_block.append(line)
+            in_code_block = not in_code_block
+
+        # If this line is blank and we're not in code, finish the current block.
+        elif line == '' and not in_code_block:
+            block_text = "\n".join(current_block)
+            blocks.append(block_text)
+            current_block = []
+
+        # Otherwise, add this line to the current block.
+        else:
             current_block.append(line)
 
-        if line.startswith("```"):
-            in_code_block = not in_code_block
+    # Append any left over block
+    if len(current_block) > 0:
+        block_text = "\n".join(current_block)
+        blocks.append(block_text)
 
     return blocks
     
