@@ -4,7 +4,7 @@ from textnode import TextNode, TextType, text_node_to_html_node
 from markdown_parser import markdown_to_blocks, split_nodes_delimiter, text_to_textnodes
 from block_to_block_type import block_to_block_type
 
-def create_paragraph_node(block):
+def create_paragraph_node(block: str):
     text_nodes = text_to_textnodes(block)
     children = []
     for text_node in text_nodes:
@@ -18,15 +18,14 @@ def create_paragraph_node(block):
     node = ParentNode("p", children)
     return node
 
-def create_code_node(block):
-    node = ParentNode("pre", 
-        [
-            TextNode(block, TextType.CODE)
-        ]
-    )
-    return node
+def create_code_node(block: str):
+    # Code block is treated as raw, any **, _ etc are ignored
+    text_node =  TextNode(block, TextType.PLAIN)
+    code_node = text_node_to_html_node(text_node)
+    pre_node = ParentNode("pre", [code_node])
+    return pre_node
 
-def markdown_to_html_node(markdown):
+def markdown_to_html_node(markdown: str):
 
     children = []
 
