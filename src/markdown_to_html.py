@@ -25,7 +25,7 @@ def create_code_node(block: str):
     # remove opening ``` and the new line after it
     content_text = block.replace("```\n", "")
 
-    # remove closing ``` but leave the new lines above it
+    # remove closing ``` but leave any new lines above it
     content_text = content_text.replace("```", "")
 
     # Code block is treated as raw, any **, _ etc are ignored
