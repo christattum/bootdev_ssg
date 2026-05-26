@@ -35,4 +35,10 @@ def copy_files(source_dir: str, target_dir: str, logger, test_mode: bool = True)
     target_path = os.path.normpath(os.path.join(cwd, target_dir))
     print("Target Path: ", target_path)
 
+    files = os.listdir(source_path)
+    for file in files:
+        full_source_path_name = os.path.join(source_path, file)
+        full_target_path_name = os.path.join(target_path, file)
+        logger(f"Copying {full_source_path_name} to {full_target_path_name}")
+
     
