@@ -14,6 +14,23 @@ def delete_files(target_dir: str, logger, test_mode: bool = True):
 
     logger(f"Removing files from {target_path}")
 
+def copy_files_r(source_path: str, target_path: str, logger, test_mode: bool = True):
+    files = os.listdir(source_path)
+    print(f"Files in {source_path}", files)
+
+    for file in files:
+        full_source_path_name = os.path.join(source_path, file)
+        full_target_path_name = os.path.join(target_path, file)
+        if os.path.isdir(full_source_path_name):
+            # Recurse into directory
+            copy_files_r(full_source_path_name, full_target_path_name, logger, test_mode)
+        elif os.path.isfile(full_source_path_name):
+            # Copy file
+            logger(f"Copying {full_source_path_name} to {full_target_path_name}")
+        else:
+            # May be a simlink or something else
+            raise RuntimeError('Not sure what to do here!')
+
 def copy_files(source_dir: str, target_dir: str, logger, test_mode: bool = True):
 
     print()
@@ -31,16 +48,5 @@ def copy_files(source_dir: str, target_dir: str, logger, test_mode: bool = True)
     target_path = os.path.normpath(os.path.join(cwd, target_dir))
     print("Target Path: ", target_path)
 
-    files = os.listdir(source_path)
-    print(f"Files in {source_path}", files)
-    for file in files:
-        full_source_path_name = os.path.join(source_path, file)
-        full_target_path_name = os.path.join(target_path, file)
-        if os.path.isdir(full_source_path_name):
-            logger("Entering directory: ", full_source_path_name)
-        elif os.path.isfile(full_source_path_name):
-            logger(f"Copying {full_source_path_name} to {full_target_path_name}")
-        else:
-            raise RuntimeError('Not sure what to do here!')
-
+    copy_files_r(source_path, target_path, logger, test_mode)
     
