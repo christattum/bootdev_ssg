@@ -16,7 +16,7 @@ def delete_files(target_dir: str, logger, test_mode: bool = True):
     print("Target Path: ", target_path)
 
     logger(f"Removing files from {target_path}")
-    if not test_mode:
+    if not test_mode and os.path.exists(target_path):
         shutil.rmtree(target_path)
 
 def copy_files_r(source_path: str, target_path: str, logger, test_mode: bool = True):
