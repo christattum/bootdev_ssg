@@ -27,7 +27,7 @@ def is_quote_block(block):
     for line in lines:
         if len(line) <= 1:
             return False
-        if line[0] != '<':
+        if line[0] != '>':
             return False
     
     return True
@@ -53,7 +53,7 @@ def block_to_block_type(block):
     if block.startswith('1') and is_ol_block(block):
         return BlockType.ORDERED_LIST
     
-    if block.startswith('<') and is_quote_block(block):
+    if block.startswith('>') and is_quote_block(block):
         return BlockType.QUOTE
 
     if block.startswith('# '):
