@@ -122,10 +122,12 @@ def markdown_to_blocks(markdown: str):
             in_code_block = not in_code_block
 
         # If this line is blank and we're not in code, finish the current block.
+        # Making sure to only add a block if it has anything in it
         elif line == '' and not in_code_block:
-            block_text = "\n".join(current_block)
-            blocks.append(block_text)
-            current_block = []
+            if len(current_block) > 0:
+                block_text = "\n".join(current_block)
+                blocks.append(block_text)
+                current_block = []
 
         # Otherwise, add this line to the current block.
         else:
