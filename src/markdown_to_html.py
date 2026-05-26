@@ -19,13 +19,13 @@ def create_paragraph_node(block: str):
     return node
 
 def create_code_node(block: str):
-    # strip any new lines
+    # strip any leading or trailing lines (above and below ```)
     block = block.strip()
 
-    # remove opening ``` and the new line
+    # remove opening ``` and the new line after it
     content_text = block.replace("```\n", "")
 
-    # remove closing ``` but leave the new line
+    # remove closing ``` but leave the new lines above it
     content_text = content_text.replace("```", "")
 
     # Code block is treated as raw, any **, _ etc are ignored
