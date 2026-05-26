@@ -35,3 +35,40 @@ the **same** even with inline stuff
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
+
+    def test_codeblock_with_opening_new_lines(self):
+        md = """
+```
+
+
+
+This is text that _should_ remain
+the **same** even with inline stuff
+```
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><pre><code>\n\n\nThis is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+        )
+
+
+    def test_codeblock_with_closing_new_lines(self):
+        md = """
+```
+This is text that _should_ remain
+the **same** even with inline stuff
+
+
+
+```
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n\n\n\n</code></pre></div>",
+        )
