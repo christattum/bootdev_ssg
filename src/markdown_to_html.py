@@ -9,6 +9,10 @@ def create_paragraph_node(block):
     children = []
     for text_node in text_nodes:
         node = text_node_to_html_node(text_node)
+
+        # replace any newlines with spaces
+        node.value = node.value.replace("\n", " ")
+
         children.append(node)
 
     node = ParentNode("p", children)
