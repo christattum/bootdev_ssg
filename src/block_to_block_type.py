@@ -41,6 +41,9 @@ def is_code_block(block):
     return False
 
 def block_to_block_type(block):
+    # remove any surrounding whitespace in case
+    block = block.strip()
+
     if len(block) <= 2:
         return BlockType.PARAGRAPH
         
