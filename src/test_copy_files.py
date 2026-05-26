@@ -13,7 +13,10 @@ class TestCopyFiles(unittest.TestCase):
     def test_copy_files(self):
         copy_files("./static", "./public", self.logger)
         self.assertListEqual([
-            "Running in test mode"
+            "Running in test mode",
+            "Copying /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/static/index.css to /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/public/index.css",
+            "Copying /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/static/images/tolkien.png to /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/public/images/tolkien.png",
+
         ], self.log)
 
     def test_delete_files(self):
