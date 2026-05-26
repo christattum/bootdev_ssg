@@ -4,7 +4,7 @@ def is_ul_block(block):
     lines = block.split("\n")
     for line in lines:
         if len(line) >= 2:
-            if line[0] != '-' or line[1] != ' ':
+            if line[0] != '-' or line[1] != ' ': # line must start with -, followed by a space
                 return False
     
     return True
