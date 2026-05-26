@@ -13,11 +13,14 @@ def is_ol_block(block):
     lines = block.split("\n")
     line_no = 1
     for line in lines:
-        if len(line) <= 2:
+
+        item = line.split(". ")
+        if len(item) != 2: # should be "NN. some text"
             return False
-        # TODO: use regex here, line number can be any number of digits
-        if ord(line[0]) != line_no or line[1] != '.':
+
+        if int(item[0]) != line_no: # incorrect numbering
             return False
+
         line_no += 1
 
     return True
@@ -34,7 +37,6 @@ def is_quote_block(block):
 
 def is_code_block(block):
     lines = block.split("\n")
-    print("code", lines)
     if lines[0].startswith("```") and lines[-1].startswith("```"):
         return True
     

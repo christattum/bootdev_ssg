@@ -85,3 +85,19 @@ This is quote line 2
 """
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.PARAGRAPH)
+
+    def test_ordered_list_with_duplicate_numbers_is_paragraph(self):
+        block = """1. This is first item
+1. This is second item
+2. This is the third item
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.PARAGRAPH)
+
+    def test_ordered_list_with_starting_number_not_1_is_paragraph(self):
+        block = """2. This is first item
+3. This is second item
+4. This is the third item
+"""
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.PARAGRAPH)
