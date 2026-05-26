@@ -19,11 +19,22 @@ def create_paragraph_node(block: str):
     return node
 
 def create_code_node(block: str):
+    # strip any new lines
+    block = block.strip()
+
+    # remove opening ``` and the new line
+    content_text = block.replace("```\n", "")
+
+    # remove closing ``` but leave the new line
+    content_text = content_text.replace("```", "")
+
     # Code block is treated as raw, any **, _ etc are ignored
-    text_node =  TextNode(block, TextType.PLAIN)
+    text_node =  TextNode(content_text, TextType.CODE)
     code_node = text_node_to_html_node(text_node)
     pre_node = ParentNode("pre", [code_node])
+
     return pre_node
+
 
 def markdown_to_html_node(markdown: str):
 
