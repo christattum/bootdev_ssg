@@ -103,10 +103,28 @@ def split_nodes_link(old_nodes):
 
     return new_nodes
 
-def markdown_to_blocks(markdown: str):
+def markdown_to_blocks_crap(markdown: str):
     blocks = markdown.strip().split("\n\n")
     stripped_blocks = list(filter(lambda x: len(x) != 0, map(lambda x: x.strip(), blocks)))
     return stripped_blocks
+
+def markdown_to_blocks(markdown: str):
+    blocks = []
+    lines = markdown.strip().split("\n")
+
+    current_block = []
+
+    in_code_block = False
+    for line in lines:
+        # Only add non-empty lines outside code block
+        # Unless in a code block, then include empty lines
+        if len(line) > 0 or in_code_block:
+            current_block.append(line)
+
+        if line.startswith("```"):
+            in_code_block = not in_code_block
+
+    return blocks
     
 def text_to_textnodes(text):
     initial_node = TextNode(text, TextType.PLAIN)
