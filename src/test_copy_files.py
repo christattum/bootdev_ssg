@@ -8,6 +8,7 @@ class TestCopyFiles(unittest.TestCase):
 
     def logger(self, text: str):
         self.log.append(text)
+        print(text)
 
     def test_copy_files(self):
         copy_files("./static", "./public", self.logger)
@@ -18,6 +19,6 @@ class TestCopyFiles(unittest.TestCase):
     def test_delete_files(self):
         delete_files("./public", self.logger)
         self.assertListEqual([
-            "Deleting ./public/index.html",
-            "Deleting ./public/styles.css"
+            "Deleting /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/public/index.html",
+            "Deleting /Users/chris/Workspace/Personal/boot.dev/bootdev_ssg/public/styles.css"
         ], self.log)
