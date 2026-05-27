@@ -1,8 +1,14 @@
 from parentnode import ParentNode
+from leafnode import LeafNode
 from blocktype import BlockType
 from textnode import TextNode, TextType, text_node_to_html_node
 from markdown_parser import markdown_to_blocks, split_nodes_delimiter, text_to_textnodes
 from block_to_block_type import block_to_block_type
+
+def create_heading_node(block: str):
+    block = block.replace("# ", "")
+    node = LeafNode("h1", block)
+    return node
 
 def create_paragraph_node(block: str):
     text_nodes = text_to_textnodes(block)
@@ -48,6 +54,9 @@ def markdown_to_html_node(markdown: str):
             node = create_paragraph_node(block)
         elif block_type == BlockType.CODE:
             node = create_code_node(block)
+        elif block_type == BlockType.HEADING:
+            node = create_heading_node(block)
+            
 
         if node is not None:
             children.append(node)
