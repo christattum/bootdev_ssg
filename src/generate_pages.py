@@ -21,7 +21,7 @@ def write_text_file(path: str, text: str):
     # Ensure directories exist
     os.makedirs(os.path.dirname(path), exist_ok=True)
     
-    with open(path, "w", ncoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8") as f:
         f.write(text)
 
 def generate_page_paths(from_path: str, template_path: str, dest_path: str):
