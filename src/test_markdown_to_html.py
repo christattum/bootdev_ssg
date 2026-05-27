@@ -4,6 +4,21 @@ from markdown_to_html import markdown_to_html_node
 
 class TestMarkdownToHTMLNode(unittest.TestCase):
 
+    def test_tolkien_top(self):
+        md = """
+# Tolkien Fan Club
+
+![JRR Tolkien sitting](/images/tolkien.png)
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><h1>Tolkien Fan Club</h1><p><img src="/tolkienfanclub/images/tolkienprofile.png" alt="JRR Tolien sitting"></img></p></div>'
+        )
+
+
     def test_paragraphs(self):
         md = """
 This is **bolded** paragraph
