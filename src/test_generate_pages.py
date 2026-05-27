@@ -7,7 +7,12 @@ class TestGeneratePages(unittest.TestCase):
         title = extract_title(md)
         self.assertEqual("This is my title", title)
 
-    def test_extract_title_throws_exception_if_missing(self):
-        md = "Here is some text\n\n# This is my title\n\nHere is a paragraph"
+    def test_extract_title_throws_exception_if_heading_malformed(self):
+        md = "Here is some text\n\n#This is my title\n\nHere is a paragraph"
+        with self.assertRaises(RuntimeError):
+            title = extract_title(md)
+
+    def test_extract_title_throws_exception_if_heading_missin(self):
+        md = "Here is some text\n\nAnother paragraph\n\n## A heading 2\n\n\Here is a paragraph"
         with self.assertRaises(RuntimeError):
             title = extract_title(md)
