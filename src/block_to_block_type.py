@@ -43,18 +43,7 @@ def is_code_block(block):
     return False
 
 def get_heading_markdown(level: int):
-    if level == 1:
-        return '# '
-    elif level == 2:
-        return '## '
-    elif level == 3:
-        return '### '
-    elif level == 4:
-        return '#### '
-    elif level == 5:
-        return '##### '
-    elif level == 6:
-        return '###### '
+    return "#" * level + " "
 
 def get_heading_level(block):
     for n in range(6):
