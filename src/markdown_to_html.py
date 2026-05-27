@@ -11,6 +11,10 @@ def create_heading_node(block: str, level: int):
     return node
 
 def create_blockquote_node(block: str):
+    # Remove > 
+    block = block.replace("> ", "")
+    block = block.replace(">", "")
+
     node = LeafNode("blockquote", block)
     return node
 

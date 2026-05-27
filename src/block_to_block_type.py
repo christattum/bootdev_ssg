@@ -28,7 +28,7 @@ def is_ol_block(block):
 def is_quote_block(block):
     lines = block.split("\n")
     for line in lines:
-        if len(line) <= 1:
+        if len(line) == 0:
             return False
         if line[0] != '>':
             return False
