@@ -3,6 +3,23 @@ from markdown_parser import markdown_to_blocks
 
 class TestMarkdownToBlocks(unittest.TestCase):
 
+    def test_first_part_tolkien(self):
+        md = """
+# Tolkien Fan Club
+
+![JRR Tolkien sitting](/images/tolkien.png)
+
+Here's the deal, **I like Tolkien**.
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(blocks, 
+            [
+                "# Tolkien Fan Club",
+                "![JRR Tolkien sitting](/images/tolkien.png)",
+                "Here's the deal, **I like Tolkien**."
+            ])
+
+
     def test_lines_between_paragraphs_are_stripped(self):
         md =  "para one\n\n\npara two"
         # should produce two paragraph-ish blocks, with no empty block
