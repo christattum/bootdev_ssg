@@ -6,7 +6,7 @@ from markdown_parser import markdown_to_blocks, split_nodes_delimiter, text_to_t
 from block_to_block_type import block_to_block_type, get_heading_level
 
 def create_heading_node(block: str, level: int):
-    block = block.replace("# ", "")
+    block = block.replace("#" * level + " ", "")
     node = LeafNode(f"h{level}", block)
     return node
 
