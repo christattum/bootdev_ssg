@@ -18,6 +18,26 @@ def create_blockquote_node(block: str):
     node = LeafNode("blockquote", block)
     return node
 
+def create_unordered_list_node(block: str):
+    li_nodes = []
+    items = block.split("\n")
+    for item in items:
+        item = item.replace("- ", "")
+        text_nodes = text_to_textnodes(item)
+        children = []
+        for text_node in text_nodes:
+            leaf_node = text_node_to_html_node(text_node)
+            children.append(leaf_node)
+
+        li_node = ParentNode("li", children)
+        li_nodes.append(li_node)
+
+    node = ParentNode("ul", li_nodes)
+    return node
+
+def create_ordered_list_node(block: str):
+    pass
+
 def create_paragraph_node(block: str):
     text_nodes = text_to_textnodes(block)
     children = []
@@ -68,9 +88,9 @@ def markdown_to_html_node(markdown: str):
             level = get_heading_level(block)
             node = create_heading_node(block, level)
         elif block_type == BlockType.ORDERED_LIST:
-            raise Exception("OL")
+            node = create_ordered_list_node(block)
         elif block_type == BlockType.UNORDERED_LIST:
-            raise Exception("UL")
+            node = create_unordered_list_node(block)
 
         if node is not None:
             children.append(node)
