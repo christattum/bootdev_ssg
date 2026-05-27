@@ -101,3 +101,23 @@ This is quote line 2
 """
         block_type = block_to_block_type(block)
         self.assertEqual(block_type, BlockType.PARAGRAPH)
+
+    def test_single_hash_with_space_is_heading(self):
+        block = "# Heading"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.HEADING)
+
+    def test_double_hash_with_space_is_heading(self):
+        block = "## Heading"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.HEADING)
+
+    def test_triple_hash_with_space_is_heading(self):
+        block = "### Heading"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.HEADING)
+
+    def test_single_hash_without_space_is_paragraph(self):
+        block = "#Heading"
+        block_type = block_to_block_type(block)
+        self.assertEqual(block_type, BlockType.PARAGRAPH)
