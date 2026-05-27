@@ -1,7 +1,8 @@
+import os
 from markdown_parser import markdown_to_blocks
 from markdown_to_html import markdown_to_html_node
 
-def extract_title(markdown):
+def extract_title(markdown: str):
     blocks = markdown_to_blocks(markdown)
 
     for block in blocks:
@@ -11,16 +12,19 @@ def extract_title(markdown):
 
     raise RuntimeError('Missing Title')
 
-def read_text_file(path):
+def read_text_file(path: str):
     with open(path, "r", encoding="utf-8") as f:
         text = f.read()
     return text
 
-def write_text_file(path, text):
+def write_text_file(path: str, text: str):
+    # Ensure directories exist
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    
     with open(path, "w", ncoding="utf-8") as f:
         f.write(text)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page_paths(from_path: str, template_path: str, dest_path: str):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     markdown = read_text_file(from_path)
@@ -33,3 +37,19 @@ def generate_page(from_path, template_path, dest_path):
     output = output.replace("{{ Content }}", content_html)
 
     write_text_file(dest_path, output)
+
+def generate_page(from_dir: str, template_file: str, dest_dir: str):
+    cwd = os.getcwd()
+    print("Current Directory:", cwd)
+
+    from_path = os.path.normpath(os.path.join(cwd, from_dir))
+    print("From Path: ", from_path)
+
+    template_path = os.path.normpath(os.path.join(cwd, template_file))
+    print("Template Path: ", template_path)
+
+    dest_path = os.path.normpath(os.path.join(cwd, dest_dir))
+    print("Dest Path: ", dest_path)
+
+    generate_page_paths(from_path, template_path, dest_path)
+
