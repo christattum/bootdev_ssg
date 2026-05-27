@@ -27,7 +27,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         html = node.to_html()
         self.assertEqual(
             html,
-            '<div><blockquote>"I am in fact a Hobbit in all but size."  -- J.R.R. Tolkien</blockquote></div>',
+            '<div><blockquote>"I am in fact a Hobbit in all but size."\n\n-- J.R.R. Tolkien</blockquote></div>',
         )
 
     def test_paragraphs(self):
