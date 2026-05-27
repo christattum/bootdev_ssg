@@ -67,6 +67,10 @@ def markdown_to_html_node(markdown: str):
         elif block_type == BlockType.HEADING:
             level = get_heading_level(block)
             node = create_heading_node(block, level)
+        elif block_type == BlockType.ORDERED_LIST:
+            raise Exception("OL")
+        elif block_type == BlockType.UNORDERED_LIST:
+            raise Exception("UL")
 
         if node is not None:
             children.append(node)
