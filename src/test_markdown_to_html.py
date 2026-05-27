@@ -56,6 +56,19 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></div>',
         )
 
+    def test_unordered_list_with_links(self):
+        md = """
+- Item 1 with a [link](http://example.com/item1)
+- Item 2 with a [link](http://example.com/item2)
+- Item 3 with a [link](http://example.com/item3)
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ul><li>Item 1 with a <a href="http://example.com/item1">link</a></li><li>Item 2 with a <a href="http://example.com/item2">link</a></li><li>Item 3 with a with a <a href="http://example.com/item3">link</a></li></ul></div>',
+        )
+
     def test_paragraphs(self):
         md = """
 This is **bolded** paragraph
