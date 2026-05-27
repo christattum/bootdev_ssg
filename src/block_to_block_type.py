@@ -42,6 +42,30 @@ def is_code_block(block):
     
     return False
 
+def is_heading_block(block):
+    if block.startswith('# '):
+        return True
+    
+    if block.startswith('## '):
+        return True
+    
+    if block.startswith('## '):
+        return True
+
+    if block.startswith('### '):
+        return True
+
+    if block.startswith('#### '):
+        return True
+
+    if block.startswith('##### '):
+        return True
+    
+    if block.startswith('###ß### '):
+        return True
+
+    return False
+
 def block_to_block_type(block):
     # remove any surrounding whitespace in case
     block = block.strip()
@@ -58,7 +82,7 @@ def block_to_block_type(block):
     if block.startswith('>') and is_quote_block(block):
         return BlockType.QUOTE
 
-    if block.startswith('# '):
+    if is_heading_block(block):
         return BlockType.HEADING
     
     if is_code_block(block):
