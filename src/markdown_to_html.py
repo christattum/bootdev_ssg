@@ -3,11 +3,11 @@ from leafnode import LeafNode
 from blocktype import BlockType
 from textnode import TextNode, TextType, text_node_to_html_node
 from markdown_parser import markdown_to_blocks, split_nodes_delimiter, text_to_textnodes
-from block_to_block_type import block_to_block_type
+from block_to_block_type import block_to_block_type, get_heading_level
 
-def create_heading_node(block: str):
+def create_heading_node(block: str, level: int):
     block = block.replace("# ", "")
-    node = LeafNode("h1", block)
+    node = LeafNode(f"h{level}", block)
     return node
 
 def create_paragraph_node(block: str):
@@ -55,8 +55,8 @@ def markdown_to_html_node(markdown: str):
         elif block_type == BlockType.CODE:
             node = create_code_node(block)
         elif block_type == BlockType.HEADING:
-            node = create_heading_node(block)
-            
+            level = get_heading_level(block)
+            node = create_heading_node(block, level)
 
         if node is not None:
             children.append(node)

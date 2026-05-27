@@ -42,26 +42,29 @@ def is_code_block(block):
     
     return False
 
+def get_heading_markdown(level: int):
+    if level == 1:
+        return '# '
+    elif level == 2:
+        return '## '
+    elif level == 3:
+        return '### '
+    elif level == 4:
+        return '#### '
+    elif level == 5:
+        return '##### '
+    elif level == 6:
+        return '###### '
+
+def get_heading_level(block):
+    for n in range(6):
+        if block.startswith(get_heading_markdown(n+1)):
+            return n+1
+    return 0
+
+# TODO: Use regex to simplify this
 def is_heading_block(block):
-    if block.startswith('# '):
-        return True
-    
-    if block.startswith('## '):
-        return True
-    
-    if block.startswith('## '):
-        return True
-
-    if block.startswith('### '):
-        return True
-
-    if block.startswith('#### '):
-        return True
-
-    if block.startswith('##### '):
-        return True
-    
-    if block.startswith('###ß### '):
+    if get_heading_level(block) > 0:
         return True
 
     return False
