@@ -10,6 +10,10 @@ def create_heading_node(block: str, level: int):
     node = LeafNode(f"h{level}", block)
     return node
 
+def create_blockquote_node(block: str):
+    node = LeafNode("blockquote", block)
+    return node
+
 def create_paragraph_node(block: str):
     text_nodes = text_to_textnodes(block)
     children = []
@@ -54,6 +58,8 @@ def markdown_to_html_node(markdown: str):
             node = create_paragraph_node(block)
         elif block_type == BlockType.CODE:
             node = create_code_node(block)
+        elif block_type == BlockType.QUOTE:
+            node = create_blockquote_node(block)
         elif block_type == BlockType.HEADING:
             level = get_heading_level(block)
             node = create_heading_node(block, level)
