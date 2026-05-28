@@ -14,5 +14,6 @@ At the terminal:-
 
 ### TODO
 
-- Lists aren't appearing
-- Quote is malformed
+- Heading contains **bold** text but it's ignored.
+- Test was checking <b>Legolas</b> in the first paragraph of glorfindel blog article
+- The Archmage text in the second paragraph IS bold though. Hmm.
