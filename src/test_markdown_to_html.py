@@ -84,6 +84,19 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></div>',
         )
 
+    def test_unordered_list_containing_hyphens(self):
+        md = """
+- Item - 1
+- Item - 2
+- Item - 3
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ul><li>Item - 1</li><li>Item - 2</li><li>Item - 3</li></ul></div>',
+        )
+
     def test_unordered_test_with_bold_italic(self):
         md = """
 - Item 1 with **bold** text
