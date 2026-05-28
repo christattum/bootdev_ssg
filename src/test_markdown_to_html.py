@@ -17,6 +17,43 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><h1>Tolkien Fan Club</h1><p><img src="/images/tolkien.png" alt="JRR Tolkien sitting"></img></p></div>'
         )
 
+    def test_paragraph_with_bold_text(self):
+        md = "Text with **bold** text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><p>Text with <b>bold</b> text</p></div>',
+        )
+
+    def test_paragraph_with_multiple_bold_text(self):
+        md = "Text with **bold** text and **more bold** text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><p>"Text with <b>bold</b> text and <b>more bold</b> text</p></div>',
+        )
+
+    def test_paragraph_with_italic_text(self):
+        md = "Text with _italic_ text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><p>Text with <i>italic</i> text</p></div>',
+        )
+
+    def test_paragraph_with_multiple_italic_text(self):
+        md = "Text with _italic_ text and _more italic_ text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><p>"Text with <i>italic</i> text and <i>more italic/i> text</p></div>',
+        )
+
+
     def test_quote(self):
         md = """
 > "I am in fact a Hobbit in all but size."
