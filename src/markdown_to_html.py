@@ -23,10 +23,12 @@ def create_unordered_list_node(block: str):
     lines = block.split("\n")
 
     for line in lines:
-        line = line.replace("- ", "")
+        # Only split on the initial "-"
+        list_item = line.split("- ", maxsplit = 1)
+        list_content = list_item[-1]
 
         li_inner_nodes = [] # bold, italic, links etc.
-        text_nodes = text_to_textnodes(line)
+        text_nodes = text_to_textnodes(list_content)
         for text_node in text_nodes:
             node = text_node_to_html_node(text_node)
             li_inner_nodes.append(node)
