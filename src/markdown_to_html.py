@@ -20,20 +20,22 @@ def create_blockquote_node(block: str):
 
 def create_unordered_list_node(block: str):
     li_nodes = []
-    items = block.split("\n")
-    for item in items:
-        item = item.replace("- ", "")
-        text_nodes = text_to_textnodes(item)
-        children = []
-        for text_node in text_nodes:
-            leaf_node = text_node_to_html_node(text_node)
-            children.append(leaf_node)
+    lines = block.split("\n")
 
-        li_node = ParentNode("li", children)
+    for line in lines:
+        line = line.replace("- ", "")
+
+        li_inner_nodes = [] # bold, italic, links etc.
+        text_nodes = text_to_textnodes(line)
+        for text_node in text_nodes:
+            node = text_node_to_html_node(text_node)
+            li_inner_nodes.append(node)
+
+        li_node = ParentNode("li", li_inner_nodes)
         li_nodes.append(li_node)
 
-    node = ParentNode("ul", li_nodes)
-    return node
+    ul_node = ParentNode("ul", li_nodes)
+    return ul_node
 
 def create_ordered_list_node(block: str):
     pass
