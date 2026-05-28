@@ -14,7 +14,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if len(split_text) >= 3 and len(split_text) % 2 == 1:    
            # should be an odd number if delimiters are matched
            for i in range(0, len(split_text)):
-                # odd lines are bold, even numbers are plain
+                # odd lines are bold/italic etc., even numbers are plain
                 if i % 2 == 0:
                     new_nodes.append(TextNode(split_text[i], TextType.PLAIN))     
                 else:
