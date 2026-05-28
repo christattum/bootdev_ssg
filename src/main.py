@@ -8,15 +8,14 @@ def logger(text):
 def main():
 
     # Set base path
-    basepath = "/"
+    base_path = "/"
     if len(sys.argv) > 1:
-        basepath = sys.argv[1]
+        base_path = sys.argv[1]
 
     delete_files('./public', logger, False)
     copy_files('./static', './public', logger, False)
 
-    # generate_page("./content/index.md", "./template.html", "./public/index.html", logger, False)
-    generate_pages_recursive("./content", "./template.html", "./public", logger, False)
+    generate_pages_recursive(base_path, "./content", "./template.html", "./public", logger, False)
 
 if __name__ == "__main__":
     main()
