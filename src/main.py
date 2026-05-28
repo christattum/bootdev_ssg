@@ -9,7 +9,7 @@ def main():
     copy_files('./static', './public', logger, False)
 
     # generate_page("./content/index.md", "./template.html", "./public/index.html")
-    generate_pages_recursive("./content", "./template.html", "./public")
+    generate_pages_recursive("./content", "./template.html", "./public", logger, True)
 
 if __name__ == "__main__":
     main()
