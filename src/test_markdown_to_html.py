@@ -43,6 +43,34 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol></div>',
         )
 
+    def test_ordered_test_with_bold_italic(self):
+        md = """
+1. Item 1 with **bold** text
+2. Item 2 with _italic_ text
+3. Item 3 with **bold** and _italic_ text
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ol><li>Item 1 with <b>bold</b> text</li><li>Item 2 with <i>italic</i> text</li><li>Item 3 with <b>bold</b> and <i>italic</i> text</li></ol></div>'
+        )
+
+    def test_ordered_list_with_links(self):
+        md = """
+1. Item 1 with a [link](http://example.com/item1)
+2. Item 2 with a [link](http://example.com/item2)
+3. Item 3 with a [link](http://example.com/item3)
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ol><li>Item 1 with a <a href="http://example.com/item1">link</a></li><li>Item 2 with a <a href="http://example.com/item2">link</a></li><li>Item 3 with a <a href="http://example.com/item3">link</a></li></ol></div>',
+        )
+
+
     def test_unordered_list(self):
         md = """
 - Item 1
