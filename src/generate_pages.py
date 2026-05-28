@@ -61,6 +61,7 @@ def generate_pages_recursive(from_dir: str, template_file: str, dest_dir: str, l
             generate_pages_recursive(from_path_name, template_file, dest_path_name, logger, test_mode)
         elif os.path.isfile(from_path_name):
             # Generate page
+            dest_path_name = dest_path_name.replace(".md", ".html")
             if test_mode:
                 logger(f"generate_page({from_path_name}, {template_file}, {dest_path_name})")
             generate_page(from_path_name, template_file, dest_path_name, logger, test_mode)
