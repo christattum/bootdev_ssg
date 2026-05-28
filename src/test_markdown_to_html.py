@@ -53,6 +53,42 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><p>Text with <i>italic</i> text and <i>more italic</i> text</p></div>',
         )
 
+    def test_heading_with_bold_text(self):
+        md = "# Heading with **bold** text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><h1>Heading with <b>bold</b> text</h1></div>',
+        )
+
+    def test_heading_with_multiple_bold_text(self):
+        md = "# Heading with **bold** text and **more bold** text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><h1>Heading with <b>bold</b> text and <b>more bold</b> text</h1></div>',
+        )
+
+    def test_heading_with_italic_text(self):
+        md = "# Heading with _italic_ text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><h1>Heading with <i>italic</i> text</h1></div>',
+        )
+
+    def test_heading_with_multiple_italic_text(self):
+        md = "# Heading with _italic_ text and _more italic_ text"
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><h1>Heading with <i>italic</i> text and <i>more italic</i> text</h1></div>',
+        )
+
 
     def test_quote(self):
         md = """
