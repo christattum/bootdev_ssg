@@ -56,6 +56,20 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
             '<div><ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul></div>',
         )
 
+    def test_unordered_test_with_bold_italic(self):
+        md = """
+- Item 1 with **bold** text
+- Item 2 with _italic_ text
+_ Item 3 with **bold* and _italic_ text
+"""
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ul><li>Item 1 with <b>bold</b> text</li><li>Item 2 with <i>italic</i> text</li><li>Item 3 with <b>bold</b> and <i>italic</i> text</li></ul></div>'
+        )
+
     def test_unordered_list_with_links(self):
         md = """
 - Item 1 with a [link](http://example.com/item1)
@@ -64,7 +78,6 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
 """
         node = markdown_to_html_node(md)
         html = node.to_html()
-        print("HERE", html)
         self.assertEqual(
             html,
             '<div><ul><li>Item 1 with a <a href="http://example.com/item1">link</a></li><li>Item 2 with a <a href="http://example.com/item2">link</a></li><li>Item 3 with a <a href="http://example.com/item3">link</a></li></ul></div>',
