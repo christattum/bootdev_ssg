@@ -18,6 +18,8 @@ def create_blockquote_node(block: str):
     node = LeafNode("blockquote", block)
     return node
 
+# TODO: refactor two methods below, as code is almost identical
+
 def create_unordered_list_node(block: str):
     li_nodes = []
     lines = block.split("\n")
@@ -40,7 +42,25 @@ def create_unordered_list_node(block: str):
     return ul_node
 
 def create_ordered_list_node(block: str):
-    pass
+    li_nodes = []
+    lines = block.split("\n")
+
+    for line in lines:
+        # Only split on the initial ". "
+        list_item = line.split(". ", maxsplit = 1)
+        list_content = list_item[-1]
+
+        li_inner_nodes = [] # bold, italic, links etc.
+        text_nodes = text_to_textnodes(list_content)
+        for text_node in text_nodes:
+            node = text_node_to_html_node(text_node)
+            li_inner_nodes.append(node)
+
+        li_node = ParentNode("li", li_inner_nodes)
+        li_nodes.append(li_node)
+
+    ol_node = ParentNode("ol", li_nodes)
+    return ol_node
 
 def create_paragraph_node(block: str):
     text_nodes = text_to_textnodes(block)
