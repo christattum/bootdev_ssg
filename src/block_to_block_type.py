@@ -14,6 +14,7 @@ def is_ol_block(block):
     line_no = 1
     for line in lines:
 
+        # TODO: This could be improved - maybe . characters inside the list text too
         item = line.split(". ")
         if len(item) != 2: # should be "NN. some text"
             return False
