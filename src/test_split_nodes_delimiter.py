@@ -24,12 +24,14 @@ class TestSplitNodesDelimiter(unittest.TestCase):
     def test_multiple_bold_text_nodes(self):
         node = TextNode("This is text with **bold** text and **more bold** text", TextType.PLAIN)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
+        # new_nodes = split_nodes_delimiter(new_nodes, "**", TextType.BOLD)
 
-        self.assertEqual(len(new_nodes), 4)
+        self.assertEqual(len(new_nodes), 5)
         self.assertEqual(new_nodes[0], TextNode("This is text with ", TextType.PLAIN))
-        self.assertEqual(new_nodes[1], TextNode("bold", TextType.BOLD))
-        self.assertEqual(new_nodes[2], TextNode("more bold", TextType.BOLD))
-        self.assertEqual(new_nodes[3], TextNode("text", TextType.PLAIN))
+        self.assertEqual(new_nodes[1], TextNode("bold", TextType.BOLD)) 
+        self.assertEqual(new_nodes[2], TextNode(" text and ", TextType.PLAIN)) 
+        self.assertEqual(new_nodes[3], TextNode("more bold", TextType.BOLD))
+        self.assertEqual(new_nodes[4], TextNode(" text", TextType.PLAIN)) 
 
     def test_italic_text_node(self):
         node = TextNode("This is text with an _italic_ word", TextType.PLAIN)
@@ -43,12 +45,14 @@ class TestSplitNodesDelimiter(unittest.TestCase):
     def test_multiple_italic_text_nodes(self):
         node = TextNode("This is text with _italic_ text and _more italic_ text", TextType.PLAIN)
         new_nodes = split_nodes_delimiter([node], "_", TextType.ITALIC)
+        # new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
 
-        self.assertEqual(len(new_nodes), 4)
+        self.assertEqual(len(new_nodes), 5)
         self.assertEqual(new_nodes[0], TextNode("This is text with ", TextType.PLAIN))
         self.assertEqual(new_nodes[1], TextNode("italic", TextType.ITALIC))
-        self.assertEqual(new_nodes[2], TextNode("more italic", TextType.ITALIC))
-        self.assertEqual(new_nodes[3], TextNode("text", TextType.PLAIN))
+        self.assertEqual(new_nodes[2], TextNode(" text and ", TextType.PLAIN))
+        self.assertEqual(new_nodes[3], TextNode("more italic", TextType.ITALIC))
+        self.assertEqual(new_nodes[4], TextNode(" text", TextType.PLAIN))
 
 
     def test_single_node_without_closing_delimiter_raises_exception(self):
