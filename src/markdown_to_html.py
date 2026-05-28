@@ -7,7 +7,18 @@ from block_to_block_type import block_to_block_type, get_heading_level
 
 def create_heading_node(block: str, level: int):
     block = block.replace("#" * level + " ", "")
-    node = LeafNode(f"h{level}", block)
+
+    text_nodes = text_to_textnodes(block)
+    children = []
+    for text_node in text_nodes:
+        node = text_node_to_html_node(text_node)
+
+        # replace any newlines with spaces
+        node.value = node.value.replace("\n", " ")
+
+        children.append(node)
+
+    node = ParentNode(f"h{level}", children)
     return node
 
 def create_blockquote_node(block: str):
