@@ -60,7 +60,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         md = """
 - Item 1 with **bold** text
 - Item 2 with _italic_ text
-_ Item 3 with **bold* and _italic_ text
+- Item 3 with **bold** and _italic_ text
 """
 
         node = markdown_to_html_node(md)
