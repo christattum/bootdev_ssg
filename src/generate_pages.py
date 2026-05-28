@@ -53,3 +53,23 @@ def generate_page(from_dir: str, template_file: str, dest_dir: str):
 
     generate_page_paths(from_path, template_path, dest_path)
 
+def generate_pages_recursive(from_dir: str, template_file: str, dest_dir: str):
+    cwd = os.getcwd()
+    from_path = os.path.normpath(os.path.join(cwd, from_dir))
+    dest_path = os.path.normpath(os.path.join(cwd, dest_dir))
+    template_path = os.path.normpath(os.path.join(cwd, template_file))
+    files = os.listdir(from_dir)
+
+    for file in files:
+        full_from_path_name = os.path.join(from_path, file)
+        full_dest_path_name = os.path.join(dest_path, file)
+
+        if os.path.isdir(full_from_path_name):
+            # Recurse into directory
+            generate_pages_recursive(full_from_path_name, full_dest_path_name)
+        elif os.path.isfile(full_from_path_name):
+            # Generate page
+            generate_page_paths(full_from_path_name, template_path, full_dest_path_name)
+        else:
+            # May be a simlink or something else
+            raise RuntimeError('Not sure what to do here!')
