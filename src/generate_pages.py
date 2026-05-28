@@ -24,7 +24,7 @@ def write_text_file(path: str, text: str):
     with open(path, "w", encoding="utf-8") as f:
         f.write(text)
 
-def generate_page_paths(from_path: str, template_path: str, dest_path: str, logger, test_mode: bool = True):
+def generate_page_paths(base_path: str, from_path: str, template_path: str, dest_path: str, logger, test_mode: bool = True):
     logger(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     markdown = read_text_file(from_path)
@@ -36,19 +36,22 @@ def generate_page_paths(from_path: str, template_path: str, dest_path: str, logg
     output = template.replace("{{ Title }}", title)
     output = output.replace("{{ Content }}", content_html)
 
+    output = output.replace('href="/', f'href="{base_path}')
+    output = output.replace('src="/', f'src="{base_path}')
+
     if not test_mode:
         write_text_file(dest_path, output)
 
-def generate_page(from_dir: str, template_file: str, dest_dir: str, logger, test_mode: bool = True):
+def generate_page(base_path: str, from_dir: str, template_file: str, dest_dir: str, logger, test_mode: bool = True):
     cwd = os.getcwd()
     from_path = os.path.normpath(os.path.join(cwd, from_dir))
     template_path = os.path.normpath(os.path.join(cwd, template_file))
 
     dest_path = os.path.normpath(os.path.join(cwd, dest_dir))
 
-    generate_page_paths(from_path, template_path, dest_path, logger, test_mode)
+    generate_page_paths(base_path, from_path, template_path, dest_path, logger, test_mode)
 
-def generate_pages_recursive(from_dir: str, template_file: str, dest_dir: str, logger, test_mode: bool = True):
+def generate_pages_recursive(base_path: str, from_dir: str, template_file: str, dest_dir: str, logger, test_mode: bool = True):
     files = os.listdir(from_dir)
 
     for file in files:
@@ -58,13 +61,13 @@ def generate_pages_recursive(from_dir: str, template_file: str, dest_dir: str, l
             # Recurse into directory
             if test_mode:
                 logger(f"generate_pages_recursive({from_path_name}, {template_file}, {dest_path_name})")
-            generate_pages_recursive(from_path_name, template_file, dest_path_name, logger, test_mode)
+            generate_pages_recursive(base_path, from_path_name, template_file, dest_path_name, logger, test_mode)
         elif os.path.isfile(from_path_name):
             # Generate page
             dest_path_name = dest_path_name.replace(".md", ".html")
             if test_mode:
                 logger(f"generate_page({from_path_name}, {template_file}, {dest_path_name})")
-            generate_page(from_path_name, template_file, dest_path_name, logger, test_mode)
+            generate_page(base_path, from_path_name, template_file, dest_path_name, logger, test_mode)
         else:
             # May be a simlink or something else
             raise RuntimeError('Not sure what to do here!')
