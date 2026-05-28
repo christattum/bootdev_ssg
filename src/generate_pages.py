@@ -50,18 +50,19 @@ def generate_page(from_dir: str, template_file: str, dest_dir: str, logger, test
 
 def generate_pages_recursive(from_dir: str, template_file: str, dest_dir: str, logger, test_mode: bool = True):
     files = os.listdir(from_dir)
-    print(files)
 
     for file in files:
         from_path_name = os.path.join(from_dir, file)
         dest_path_name = os.path.join(dest_dir, file)
         if os.path.isdir(from_path_name):
             # Recurse into directory
-            print(f"generate_pages_recursive({from_path_name}, {template_file}, {dest_path_name})")
+            if test_mode:
+                logger(f"generate_pages_recursive({from_path_name}, {template_file}, {dest_path_name})")
             generate_pages_recursive(from_path_name, template_file, dest_path_name, logger, test_mode)
         elif os.path.isfile(from_path_name):
             # Generate page
-            print(f"generate_page({from_path_name}, {template_file}, {dest_path_name})")
+            if test_mode:
+                logger(f"generate_page({from_path_name}, {template_file}, {dest_path_name})")
             generate_page(from_path_name, template_file, dest_path_name, logger, test_mode)
         else:
             # May be a simlink or something else
