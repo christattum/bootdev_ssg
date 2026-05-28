@@ -9,15 +9,19 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if old_node.text_type != TextType.PLAIN:
             new_nodes.append(old_node)
             continue
-        # maxsplit = 2, for opening and closing delimiter
-        # which results in 3 strings
-        split_text = old_node.text.split(delimiter, maxsplit=2)
-        if len(split_text) == 3:
-            new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
-            new_nodes.append(TextNode(split_text[1], text_type))
-            new_nodes.append(TextNode(split_text[2], TextType.PLAIN))
-        elif len(split_text) == 2:
-            raise ValueError('missing')
+
+        split_text = old_node.text.split(delimiter)
+        if len(split_text) >= 3 and len(split_text) % 2 == 1:    
+           # should be an odd number if delimiters are matched
+           for i in range(0, len(split_text)):
+                # odd lines are bold, even numbers are plain
+                if i % 2 == 0:
+                    new_nodes.append(TextNode(split_text[i], TextType.PLAIN))     
+                else:
+                    new_nodes.append(TextNode(split_text[i], text_type))     
+                
+        elif len(split_text) % 2 == 0:
+            raise ValueError('unmatched delimiters')
         elif len(split_text) == 1:
             new_nodes.append(TextNode(split_text[0], TextType.PLAIN))
         else:

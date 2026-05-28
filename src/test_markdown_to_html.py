@@ -32,7 +32,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         html = node.to_html()
         self.assertEqual(
             html,
-            '<div><p>"Text with <b>bold</b> text and <b>more bold</b> text</p></div>',
+            '<div><p>Text with <b>bold</b> text and <b>more bold</b> text</p></div>',
         )
 
     def test_paragraph_with_italic_text(self):
@@ -50,7 +50,7 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         html = node.to_html()
         self.assertEqual(
             html,
-            '<div><p>"Text with <i>italic</i> text and <i>more italic/i> text</p></div>',
+            '<div><p>Text with <i>italic</i> text and <i>more italic</i> text</p></div>',
         )
 
 
