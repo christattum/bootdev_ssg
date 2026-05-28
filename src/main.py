@@ -12,7 +12,7 @@ def main():
     if len(sys.argv) > 1:
         base_path = sys.argv[1]
 
-    delete_files('./public', logger, False)
+    delete_files('./docs', logger, False)
     copy_files('./static', './docs', logger, False)
 
     generate_pages_recursive(base_path, "./content", "./template.html", "./docs", logger, False)
